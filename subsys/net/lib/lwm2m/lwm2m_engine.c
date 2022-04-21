@@ -1593,7 +1593,7 @@ static int select_writer(struct lwm2m_output_context *out, uint16_t accept)
 #endif
 
 #if defined(CONFIG_LWM2M_RW_SENML_JSON_SUPPORT)
-	case LWM2M_FORMAT_APP_SEML_JSON:
+	case LWM2M_FORMAT_APP_SENML_JSON:
 		out->writer = &senml_json_writer;
 		break;
 #endif
@@ -1630,7 +1630,7 @@ static int select_reader(struct lwm2m_input_context *in, uint16_t format)
 #endif
 
 #if defined(CONFIG_LWM2M_RW_SENML_JSON_SUPPORT)
-	case LWM2M_FORMAT_APP_SEML_JSON:
+	case LWM2M_FORMAT_APP_SENML_JSON:
 		in->reader = &senml_json_reader;
 		break;
 #endif
@@ -3692,7 +3692,7 @@ static int do_read_op(struct lwm2m_message *msg, uint16_t content_format)
 #endif
 
 #if defined(CONFIG_LWM2M_RW_SENML_JSON_SUPPORT)
-	case LWM2M_FORMAT_APP_SEML_JSON:
+	case LWM2M_FORMAT_APP_SENML_JSON:
 		return do_read_op_senml_json(msg);
 #endif
 
@@ -3708,7 +3708,7 @@ static int do_composite_read_op(struct lwm2m_message *msg, uint16_t content_form
 	switch (content_format) {
 
 #if defined(CONFIG_LWM2M_RW_SENML_JSON_SUPPORT)
-	case LWM2M_FORMAT_APP_SEML_JSON:
+	case LWM2M_FORMAT_APP_SENML_JSON:
 		return do_composite_read_op_senml_json(msg);
 #endif
 
@@ -3725,7 +3725,7 @@ static int do_composite_observe_read_path_op(struct lwm2m_message *msg, uint16_t
 {
 	switch (content_format) {
 #if defined(CONFIG_LWM2M_RW_SENML_JSON_SUPPORT)
-	case LWM2M_FORMAT_APP_SEML_JSON:
+	case LWM2M_FORMAT_APP_SENML_JSON:
 		return do_composite_observe_parse_path_senml_json(msg, lwm2m_path_list,
 								  lwm2m_path_free_list);
 #endif
@@ -4235,7 +4235,7 @@ static int do_write_op(struct lwm2m_message *msg,
 #endif
 
 #if defined(CONFIG_LWM2M_RW_SENML_JSON_SUPPORT)
-	case LWM2M_FORMAT_APP_SEML_JSON:
+	case LWM2M_FORMAT_APP_SENML_JSON:
 		return do_write_op_senml_json(msg);
 #endif
 
@@ -4251,7 +4251,7 @@ static int do_composite_write_op(struct lwm2m_message *msg,
 {
 	switch (format) {
 #if defined(CONFIG_LWM2M_RW_SENML_JSON_SUPPORT)
-	case LWM2M_FORMAT_APP_SEML_JSON:
+	case LWM2M_FORMAT_APP_SENML_JSON:
 		return do_write_op_senml_json(msg);
 #endif
 
@@ -4414,7 +4414,7 @@ static int lwm2m_engine_default_content_format(uint16_t *accept_format)
 		/* Select content format use SenML CBOR when it possible */
 		if (IS_ENABLED(CONFIG_LWM2M_RW_SENML_JSON_SUPPORT)) {
 			LOG_DBG("No accept option given. Assume SenML Json.");
-			*accept_format = LWM2M_FORMAT_APP_SEML_JSON;
+			*accept_format = LWM2M_FORMAT_APP_SENML_JSON;
 		} else {
 			LOG_ERR("SenML CBOR or JSON is not supported");
 			return -ENOTSUP;
@@ -6131,7 +6131,7 @@ static int do_send_op(struct lwm2m_message *msg, uint16_t content_format,
 {
 	switch (content_format) {
 #if defined(CONFIG_LWM2M_RW_SENML_JSON_SUPPORT)
-	case LWM2M_FORMAT_APP_SEML_JSON:
+	case LWM2M_FORMAT_APP_SENML_JSON:
 		return do_send_op_senml_json(msg, lwm2m_path_list);
 #endif
 
@@ -6192,7 +6192,7 @@ int lwm2m_engine_send(struct lwm2m_ctx *ctx, char const *path_list[], uint8_t pa
 
 	/* Select content format use CBOR when it possible */
 	if (IS_ENABLED(CONFIG_LWM2M_RW_SENML_JSON_SUPPORT)) {
-		content_format = LWM2M_FORMAT_APP_SEML_JSON;
+		content_format = LWM2M_FORMAT_APP_SENML_JSON;
 	} else {
 		LOG_WRN("SenML CBOR or JSON is not supported");
 		return -ENOTSUP;

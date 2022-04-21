@@ -1095,7 +1095,7 @@ int do_read_op_senml_json(struct lwm2m_message *msg)
 	/* Add one entry to list */
 	sys_slist_append(&lwm2m_path_list, &temp.node);
 
-	ret = lwm2m_perform_read_op(msg, LWM2M_FORMAT_APP_SEML_JSON);
+	ret = lwm2m_perform_read_op(msg, LWM2M_FORMAT_APP_SENML_JSON);
 	engine_clear_out_user_data(&msg->out);
 
 	return ret;
@@ -1445,7 +1445,7 @@ int do_composite_read_op_senml_json(struct lwm2m_message *msg)
 	(void)memset(&fd, 0, sizeof(fd));
 	engine_set_out_user_data(&msg->out, &fd);
 
-	ret = lwm2m_perform_composite_read_op(msg, LWM2M_FORMAT_APP_SEML_JSON, &path_list);
+	ret = lwm2m_perform_composite_read_op(msg, LWM2M_FORMAT_APP_SENML_JSON, &path_list);
 	engine_clear_out_user_data(&msg->out);
 
 	return ret;
@@ -1459,7 +1459,7 @@ int do_send_op_senml_json(struct lwm2m_message *msg, sys_slist_t *lwm2m_path_lis
 	(void)memset(&fd, 0, sizeof(fd));
 	engine_set_out_user_data(&msg->out, &fd);
 
-	ret = lwm2m_perform_composite_read_op(msg, LWM2M_FORMAT_APP_SEML_JSON, lwm2m_path_list);
+	ret = lwm2m_perform_composite_read_op(msg, LWM2M_FORMAT_APP_SENML_JSON, lwm2m_path_list);
 	engine_clear_out_user_data(&msg->out);
 
 	return ret;
